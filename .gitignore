@@ -29,13 +29,15 @@ Temp
 *.exp
 *.aps
 *.iobj
-*.suo
-*.user
 *.res
+*.txt
+*.old
 
 #	IDE管理类文件
 *.manifest
 *.opensdf
 *.lastbuildstate
 *.unsuccessfulbuild
+*.suo
+*.user
 
