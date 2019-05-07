@@ -1,13 +1,13 @@
 #ifndef __SKIN_MANAGER_H__
 #define __SKIN_MANAGER_H__
 
-#include "..\..\DuiLib\UIlib.h"
+#include "UIlib.h"
 
 struct SkinChangedParam
 {
 	bool bColor;
 	DWORD bkcolor;
-	CDuiString bgimage;
+	CStringUI bgimage;
 };
 
 typedef class ObserverImpl<BOOL, SkinChangedParam> SkinChangedObserver;

@@ -11,15 +11,15 @@
 #include <objbase.h>
 #include <zmouse.h>
 
-#include "..\..\DuiLib\UIlib.h"
+#include "Core/UIDefine.h"
 
-using namespace DuiLib;
+using namespace DUI;
 
 #ifdef _DEBUG
 #   ifdef _UNICODE
-#       pragma comment(lib, "..\\..\\lib\\DuiLib_d.lib")
+#       pragma comment(lib, "DuiLib_d.lib")
 #   else
-#       pragma comment(lib, "..\\..\\lib\\DuiLibA_d.lib")
+#       pragma comment(lib, "DuiLibA_d.lib")
 #   endif
 #else
 #   ifdef _UNICODE

@@ -2,37 +2,37 @@
 #include "resource.h"
 #include "MainWnd.h"
 #include "SkinFrame.h"
-
+#include "Core/UIControl.h"
 //////////////////////////////////////////////////////////////////////////
 ///
 
-DUI_BEGIN_MESSAGE_MAP(CMainPage, CNotifyPump)
-	DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK,OnClick)
-	DUI_ON_MSGTYPE(DUI_MSGTYPE_SELECTCHANGED,OnSelectChanged)
-	DUI_ON_MSGTYPE(DUI_MSGTYPE_ITEMCLICK,OnItemClick)
-DUI_END_MESSAGE_MAP()
+UI_BEGIN_MESSAGE_MAP(CMainPage, CNotifyPumpUI)
+	UI_ON_MSGTYPE(UIMSG_CLICK,OnClick)
+	UI_ON_MSGTYPE(UIMSG_SELECTCHANGED,OnSelectChanged)
+	UI_ON_MSGTYPE(UIMSG_ITEMCLICK,OnItemClick)
+UI_END_MESSAGE_MAP()
 
 CMainPage::CMainPage()
 {
 	m_pPaintManager = NULL;
 }
 
-void CMainPage::SetPaintMagager(CPaintManagerUI* pPaintMgr)
+void CMainPage::SetPaintMagager(CManagerUI* pPaintMgr)
 {
 	m_pPaintManager = pPaintMgr;
 }
 
-void CMainPage::OnClick(TNotifyUI& msg)
+void CMainPage::OnClick(struct TNOTIFY_UI& msg)
 {
 
 }
 
-void CMainPage::OnSelectChanged( TNotifyUI &msg )
+void CMainPage::OnSelectChanged( struct TNOTIFY_UI &msg )
 {
 
 }
 
-void CMainPage::OnItemClick( TNotifyUI &msg )
+void CMainPage::OnItemClick( struct TNOTIFY_UI &msg )
 {
 
 }
@@ -72,8 +72,8 @@ void CMainWnd::InitWindow()
 {
 	SetIcon(IDR_MAINFRAME);
 	// 多语言接口
-	CResourceManagerUI::GetInstance()->SetTextQueryInterface(this);
-	CResourceManagerUI::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
+	CResourceUI::GetInstance()->SetTextQueryInterface(this);
+	CResourceUI::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
 	// 皮肤接口
 	CSkinManager::GetSkinManager()->AddReceiver(this);
 
@@ -264,7 +264,7 @@ HRESULT STDMETHODCALLTYPE CMainWnd::ShowContextMenu(CWebBrowserUI* pWeb,
 	//返回S_OK 则可屏蔽系统右键菜单
 }
 
-DuiLib::CDuiString CMainWnd::GetSkinFile()
+CStringUI CMainWnd::GetSkinFile()
 {
 	return _T("XML_MAIN");
 }
@@ -286,7 +286,7 @@ void CMainWnd::OnFinalMessage(HWND hWnd)
 
 LPCTSTR CMainWnd::QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType)
 {
-	CDuiString sLanguage = CResourceManagerUI::GetInstance()->GetLanguage();
+	CStringUI sLanguage = CResourceUI::GetInstance()->GetLanguage();
 	if(sLanguage == _T("en")){
 		if(lstrcmpi(lpstrId, _T("titletext")) == 0) {
 			return _T("Duilib Demo v1.1");
@@ -307,9 +307,9 @@ LPCTSTR CMainWnd::QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType)
 	return NULL;
 }
 
-void CMainWnd::Notify(TNotifyUI& msg)
+void CMainWnd::Notify(struct TNOTIFY_UI& msg)
 {
-	CDuiString name = msg.pSender->GetName();
+	CStringUI name = msg.pSender->GetName();
 	if(msg.sType == _T("windowinit")) {
 	}
 	else if( msg.sType == _T("colorchanged") )
@@ -335,7 +335,7 @@ void CMainWnd::Notify(TNotifyUI& msg)
 			pActiveX->GetControl(__uuidof(IShockwaveFlash), (void**)&pFlash);
 			if( pFlash != NULL )  {
 				pFlash->put_WMode( _bstr_t(_T("Transparent") ) );
-				pFlash->put_Movie( _bstr_t(CPaintManagerUI::GetInstancePath() + _T("\\skin\\duidemo\\other\\waterdrop.swf")) );
+				pFlash->put_Movie( _bstr_t(CManagerUI::GetInstancePath() + _T("\\skin\\duidemo\\other\\waterdrop.swf")) );
 				pFlash->DisableLocalSecurity();
 				pFlash->put_AllowScriptAccess(L"always");
 				BSTR response;
@@ -404,7 +404,7 @@ void CMainWnd::Notify(TNotifyUI& msg)
 }
 void CMainWnd::OnLClick(CControlUI *pControl)
 {
-	CDuiString sName = pControl->GetName();
+	CStringUI sName = pControl->GetName();
 	if(sName.CompareNoCase(_T("homepage_btn")) == 0)
 	{
 		//
@@ -464,7 +464,7 @@ void CMainWnd::OnLClick(CControlUI *pControl)
 	{
 		TCHAR szPath[MAX_PATH] ={0};
 		SHGetFolderPath(NULL, CSIDL_PROGRAM_FILES | CSIDL_FLAG_CREATE, NULL, 0, szPath);
-		CDuiString sIEPath;
+		CStringUI sIEPath;
 		sIEPath.Format(_T("%s\\Internet Explorer\\iexplore.exe"), szPath);
 		ShellExecute(NULL, _T("open"), sIEPath, _T("http://jq.qq.com/?_wv=1027&k=cDTUzr"), NULL, SW_SHOW);
 	}
@@ -472,7 +472,7 @@ void CMainWnd::OnLClick(CControlUI *pControl)
 	{
 		TCHAR szPath[MAX_PATH] ={0};
 		SHGetFolderPath(NULL, CSIDL_PROGRAM_FILES | CSIDL_FLAG_CREATE, NULL, 0, szPath);
-		CDuiString sIEPath;
+		CStringUI sIEPath;
 		sIEPath.Format(_T("%s\\Internet Explorer\\iexplore.exe"), szPath);
 		ShellExecute(NULL, _T("open"), sIEPath, _T("tencent://Message/?Uin=656067418&Menu=yes"), NULL, SW_SHOW);
 	}
@@ -570,24 +570,24 @@ LRESULT CMainWnd::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, B
 		if(pMenuCmd != NULL)
 		{
 			BOOL bChecked = pMenuCmd->bChecked;
-			CDuiString sMenuName = pMenuCmd->szName;
-			CDuiString sUserData = pMenuCmd->szUserData;
-			CDuiString sText = pMenuCmd->szText;
+			CStringUI sMenuName = pMenuCmd->szName;
+			CStringUI sUserData = pMenuCmd->szUserData;
+			CStringUI sText = pMenuCmd->szText;
 			m_pm.DeletePtr(pMenuCmd);
 
 			if(sMenuName.CompareNoCase(_T("lan")) == 0)
 			{
 				static bool bEn = false;
 				if(!bEn) {
-					CResourceManagerUI::GetInstance()->SetLanguage(_T("en"));
-					CResourceManagerUI::GetInstance()->LoadLanguage(_T("lan_en.xml"));
+					CResourceUI::GetInstance()->SetLanguage(_T("en"));
+					CResourceUI::GetInstance()->LoadLanguage(_T("lan_en.xml"));
 				}
 				else {
-					CResourceManagerUI::GetInstance()->SetLanguage(_T("cn_zh"));
-					CResourceManagerUI::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
+					CResourceUI::GetInstance()->SetLanguage(_T("cn_zh"));
+					CResourceUI::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
 				}
 				bEn = !bEn;
-				CResourceManagerUI::GetInstance()->ReloadText();
+				CResourceUI::GetInstance()->ReloadText();
 				InvalidateRect(m_hWnd, NULL, TRUE);
 				m_pm.NeedUpdate();
 			}

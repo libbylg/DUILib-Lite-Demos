@@ -4,9 +4,9 @@
 //////////////////////////////////////////////////////////////////////////
 ///
 
-DUI_BEGIN_MESSAGE_MAP(CMsgWnd, WindowImplBase)
-	DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK,OnClick)
-DUI_END_MESSAGE_MAP()
+UI_BEGIN_MESSAGE_MAP(CMsgWnd, CWindowUI)
+	UI_ON_MSGTYPE(UIMSG_CLICK, OnClick)
+UI_END_MESSAGE_MAP()
 
 CMsgWnd::CMsgWnd(void)
 {
@@ -38,7 +38,7 @@ void CMsgWnd::OnFinalMessage( HWND hWnd)
 	delete this;
 }
 
-DuiLib::CDuiString CMsgWnd::GetSkinFile()
+CStringUI CMsgWnd::GetSkinFile()
 {
 	return _T("XML_MSG");
 }
@@ -48,9 +48,9 @@ LPCTSTR CMsgWnd::GetWindowClassName( void ) const
 	return _T("MsgWnd");
 }
 
-void CMsgWnd::OnClick( TNotifyUI &msg )
+void CMsgWnd::OnClick( struct TNOTIFY_UI &msg )
 {
-	CDuiString sName = msg.pSender->GetName();
+	CStringUI sName = msg.pSender->GetName();
 	sName.MakeLower();
 
 	if( msg.pSender == m_pCloseBtn ) {
@@ -81,7 +81,7 @@ LRESULT CMsgWnd::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
 	 return 0;
  }
 
-void CMsgWnd::Notify( TNotifyUI &msg )
+void CMsgWnd::Notify( struct TNOTIFY_UI &msg )
 {
 	return WindowImplBase::Notify(msg);
 }

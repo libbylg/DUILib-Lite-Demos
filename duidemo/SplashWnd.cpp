@@ -23,7 +23,7 @@ void CSplashWnd::OnFinalMessage( HWND hWnd)
 	delete this;
 }
 
-DuiLib::CDuiString CSplashWnd::GetSkinFile()
+CStringUI CSplashWnd::GetSkinFile()
 {
 	return _T("splash.xml");
 }
@@ -33,9 +33,9 @@ LPCTSTR CSplashWnd::GetWindowClassName( void ) const
 	return _T("SplashWnd");
 }
 
-void CSplashWnd::OnClick( TNotifyUI &msg )
+void CSplashWnd::OnClick( struct TNOTIFY_UI &msg )
 {
-	CDuiString sName = msg.pSender->GetName();
+	CStringUI sName = msg.pSender->GetName();
 	sName.MakeLower();
 
 }

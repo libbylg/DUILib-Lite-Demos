@@ -13,61 +13,64 @@
 #include<stdlib.h>
 #include<crtdbg.h>
 
+#include "Core/UIResource.h"
+#include "Control/UIFactory.h"
+
 
 void InitResource()
 {
 	// 资源类型
 #ifdef _DEBUG
-	CPaintManagerUI::SetResourceType(UILIB_FILE);
+	CManagerUI::SetResourceType(UIRES_FILE);
 #else
-	CPaintManagerUI::SetResourceType(UILIB_ZIPRESOURCE);
+	CManagerUI::SetResourceType(UILIB_ZIPRESOURCE);
 #endif
 	// 资源路径
-	CDuiString strResourcePath = CPaintManagerUI::GetInstancePath();
+	CStringUI strResourcePath = CManagerUI::GetInstancePath();
 	// 加载资源
-	switch(CPaintManagerUI::GetResourceType())
+	switch(CManagerUI::GetResourceType())
 	{
-	case UILIB_FILE:
+	case UIRES_FILE:
 		{
 			strResourcePath += _T("skin\\duidemo\\");
-			CPaintManagerUI::SetResourcePath(strResourcePath.GetData());
+			CManagerUI::SetResourcePath(strResourcePath.GetData());
 			// 加载资源管理器
-			CResourceManagerUI::GetInstance()->LoadResource(_T("res.xml"), NULL);
+			CResourceUI::GetInstance()->LoadResource(_T("res.xml"), NULL);
 			break;
 		}
-	case UILIB_RESOURCE:
+	case UIRES_RESOURCE:
 		{
 			strResourcePath += _T("skin\\duidemo\\");
-			CPaintManagerUI::SetResourcePath(strResourcePath.GetData());
+			CManagerUI::SetResourcePath(strResourcePath.GetData());
 			// 加载资源管理器
-			CResourceManagerUI::GetInstance()->LoadResource(_T("IDR_RES"), _T("xml"));
+			CResourceUI::GetInstance()->LoadResource(_T("IDR_RES"), _T("xml"));
 			break;
 		}
-	case UILIB_ZIP:
+	case UIRES_ZIP:
 		{
 			strResourcePath += _T("skin\\");
-			CPaintManagerUI::SetResourcePath(strResourcePath.GetData());
+			CManagerUI::SetResourcePath(strResourcePath.GetData());
 			// 加密
-			CPaintManagerUI::SetResourceZip(_T("duidemo_pwd.zip"), true, _T("duilib_ultimate"));
-			//CPaintManagerUI::SetResourceZip(_T("duidemo.zip"), true);
+			CManagerUI::SetResourceZip(_T("duidemo_pwd.zip"), true, _T("duilib_ultimate"));
+			//CManagerUI::SetResourceZip(_T("duidemo.zip"), true);
 			// 加载资源管理器
-			CResourceManagerUI::GetInstance()->LoadResource(_T("res.xml"), NULL);
+			CResourceUI::GetInstance()->LoadResource(_T("res.xml"), NULL);
 			break;
 		}
-	case UILIB_ZIPRESOURCE:
+	case UIRES_ZIPRESOURCE:
 		{
 			strResourcePath += _T("skin\\duidemo\\");
-			CPaintManagerUI::SetResourcePath(strResourcePath.GetData());
-			HRSRC hResource = ::FindResource(CPaintManagerUI::GetResourceDll(), _T("IDR_ZIPRES"), _T("ZIPRES"));
+			CManagerUI::SetResourcePath(strResourcePath.GetData());
+			HRSRC hResource = ::FindResource(CManagerUI::GetResourceDll(), _T("IDR_ZIPRES"), _T("ZIPRES"));
 			if( hResource != NULL ) {
 				DWORD dwSize = 0;
-				HGLOBAL hGlobal = ::LoadResource(CPaintManagerUI::GetResourceDll(), hResource);
+				HGLOBAL hGlobal = ::LoadResource(CManagerUI::GetResourceDll(), hResource);
 				if( hGlobal != NULL ) {
-					dwSize = ::SizeofResource(CPaintManagerUI::GetResourceDll(), hResource);
+					dwSize = ::SizeofResource(CManagerUI::GetResourceDll(), hResource);
 					if( dwSize > 0 ) {
-						CPaintManagerUI::SetResourceZip((LPBYTE)::LockResource(hGlobal), dwSize);
+						CManagerUI::SetResourceZip((LPBYTE)::LockResource(hGlobal), dwSize);
 						// 加载资源管理器
-						CResourceManagerUI::GetInstance()->LoadResource(_T("res.xml"), NULL);
+						CResourceUI::GetInstance()->LoadResource(_T("res.xml"), NULL);
 					}
 				}
 				::FreeResource(hResource);
@@ -77,10 +80,10 @@ void InitResource()
 	}
 
 	// 注册控件
-	REGIST_DUICONTROL(CCircleProgressUI);
-	REGIST_DUICONTROL(CMyComboUI);
-	REGIST_DUICONTROL(CChartViewUI);
-	REGIST_DUICONTROL(CWndUI);
+    UI_REGISTER_CONTROL(CCircleProgressUI);
+    UI_REGISTER_CONTROL(CMyComboUI);
+    UI_REGISTER_CONTROL(CChartViewUI);
+    UI_REGISTER_CONTROL(CWndUI);
 }
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
@@ -93,7 +96,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
 	// OLE
 	HRESULT hRes = ::OleInitialize(NULL);
 	// 初始化UI管理器
-	CPaintManagerUI::SetInstance(hInstance);
+	CManagerUI::SetInstance(hInstance);
 	// 初始化资源
 	InitResource();
 
@@ -106,12 +109,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
 	pMainWnd->Create(NULL, _T("duilib使用例子集锦（By Troy）"), UI_WNDSTYLE_FRAME, 0L, 0, 0, 800, 572);
 	pMainWnd->CenterWindow();
 	// 消息循环
-	CPaintManagerUI::MessageLoop();
+	CManagerUI::MessageLoop();
 	// 销毁窗口
 	delete pMainWnd;
 	pMainWnd = NULL;
 	// 清理资源
-	CPaintManagerUI::Term();
+	CManagerUI::Term();
 	// OLE
 	OleUninitialize();
 	// COM

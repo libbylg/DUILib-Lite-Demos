@@ -25,7 +25,7 @@ void CPopWnd::OnFinalMessage( HWND hWnd)
 	delete this;
 }
 
-DuiLib::CDuiString CPopWnd::GetSkinFile()
+CStringUI CPopWnd::GetSkinFile()
 {
 	return _T("popup.xml");
 }
@@ -35,9 +35,9 @@ LPCTSTR CPopWnd::GetWindowClassName( void ) const
 	return _T("PopWnd");
 }
 
-void CPopWnd::OnClick( TNotifyUI &msg )
+void CPopWnd::OnClick( struct TNOTIFY_UI &msg )
 {
-	CDuiString sName = msg.pSender->GetName();
+	CStringUI sName = msg.pSender->GetName();
 	sName.MakeLower();
 
 	if( msg.pSender == m_pCloseBtn ) {
@@ -59,16 +59,16 @@ void CPopWnd::OnClick( TNotifyUI &msg )
 	}
 }
 
-void CPopWnd::OnSelectChanged( TNotifyUI &msg )
+void CPopWnd::OnSelectChanged( struct TNOTIFY_UI &msg )
 {
-	CDuiString sName = msg.pSender->GetName();
+	CStringUI sName = msg.pSender->GetName();
 	sName.MakeLower();
 
 }
 
-void CPopWnd::OnItemSelect( TNotifyUI &msg )
+void CPopWnd::OnItemSelect( struct TNOTIFY_UI &msg )
 {
-	CDuiString sName = msg.pSender->GetName();
+	CStringUI sName = msg.pSender->GetName();
 	sName.MakeLower();
 }
 
@@ -78,7 +78,7 @@ LRESULT CPopWnd::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
 	 return 0;
  }
 
-void CPopWnd::Notify( TNotifyUI &msg )
+void CPopWnd::Notify( struct TNOTIFY_UI &msg )
 {
 	return WindowImplBase::Notify(msg);
 }

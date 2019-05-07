@@ -1,10 +1,14 @@
-#pragma once
+#ifndef _MsgWnd_H_
+#define _MsgWnd_H_
+
+#include "Core/UIWindow.h"
+#include "Control/UIButton.h"
 
 //////////////////////////////////////////////////////////////////////////
 ///
 #define MSGID_OK		1
 #define MSGID_CANCEL	0
-class CMsgWnd : public WindowImplBase
+class CMsgWnd : public CWindowUI
 {
 public:
 	static int MessageBox(HWND hParent, LPCTSTR lpstrTitle, LPCTSTR lpstrMsg)
@@ -36,13 +40,13 @@ public:
 
 public:
 	virtual void OnFinalMessage( HWND );
-	virtual CDuiString GetSkinFile();
+	virtual CStringUI GetSkinFile();
 	virtual LPCTSTR GetWindowClassName( void ) const;
-	virtual void Notify( TNotifyUI &msg );
+	virtual void Notify( struct TNOTIFY_UI &msg );
 	virtual void InitWindow();
 
-	DUI_DECLARE_MESSAGE_MAP()
-	virtual void OnClick(TNotifyUI& msg);
+	UI_DECLARE_MESSAGE_MAP()
+	virtual void OnClick(struct TNOTIFY_UI& msg);
 
 	virtual LRESULT OnSysCommand( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled );
 	LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
@@ -54,3 +58,4 @@ private:
 	CButtonUI* m_pMinBtn;
 	CButtonUI* m_pMenuBtn;
 };
+#endif//_MsgWnd_H_

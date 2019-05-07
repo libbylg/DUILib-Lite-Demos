@@ -1,6 +1,10 @@
-#pragma once
+#ifndef __SkinFrame_H_
+#define __SkinFrame_H_
 
 #include "SkinManager.h"
+
+#include "Layout/UITabLayout.h"
+#include "Control/UIDialogBuilder.h"
 
 class CSkinFrame : public CWindowUI, public INotifyUI
 {
@@ -31,7 +35,7 @@ public:
 	UINT GetClassStyle() const { return CS_DBLCLKS; };
 	void OnFinalMessage(HWND /*hWnd*/) { delete this; };
 
-	void Notify(TNotifyUI& msg)
+	void Notify(struct TNOTIFY_UI& msg)
 	{
 		if( msg.sType == _T("click") ) {
 			// °´Å¥ÏûÏ¢
@@ -41,7 +45,7 @@ public:
 
 	void OnLClick(CControlUI *pControl)
 	{
-		CDuiString sName = pControl->GetName();
+		CStringUI sName = pControl->GetName();
 
 		if(sName.CompareNoCase(_T("skin_image_btn")) == 0)
 		{
@@ -79,7 +83,7 @@ public:
 		::SetWindowLong(*this, GWL_STYLE, styleValue | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 
 		m_pm.Init(m_hWnd);
-		CDialogBuilder builder;
+		CDialogBuilderUI builder;
 		CControlUI* pRoot = builder.Create(_T("skin.xml"), (UINT)0, NULL, &m_pm);
 		ASSERT(pRoot && "Failed to parse XML");
 		m_pm.AttachDialog(pRoot);
@@ -145,9 +149,12 @@ public:
 	}
 
 public:
-	CPaintManagerUI m_pm;
+	CManagerUI m_pm;
 
 private:
 	HWND m_hParent;
 	CControlUI* m_pControl;
 };
+
+#endif//__SkinFrame_H_
+

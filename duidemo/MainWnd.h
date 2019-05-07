@@ -5,37 +5,46 @@
 #include "ControlEx.h"
 #include "SkinManager.h"
 
-//////////////////////////////////////////////////////////////////////////
+#include "Core/UIControl.h"
+#include "Core/UIManager.h"
+#include "Core/UIWindow.h"
+
+/////////////////////////
+
+/////////////////////////////////////////////////
 ///
 
-class CMainPage : public CNotifyPump
+using namespace DUI;
+
+
+class CMainPage : public CNotifyPumpUI
 {
 public:
 	CMainPage();
 
 public:
-	void SetPaintMagager(CPaintManagerUI* pPaintMgr);
+	void SetPaintMagager(CManagerUI* pPaintMgr);
 
-	DUI_DECLARE_MESSAGE_MAP()
-	virtual void OnClick(TNotifyUI& msg);
-	virtual void OnSelectChanged( TNotifyUI &msg );
-	virtual void OnItemClick( TNotifyUI &msg );
+	UI_DECLARE_MESSAGE_MAP()
+	virtual void OnClick(TNOTIFY_UI& msg);
+	virtual void OnSelectChanged( TNOTIFY_UI &msg );
+	virtual void OnItemClick(TNOTIFY_UI&msg );
 
 private:
-	CPaintManagerUI* m_pPaintManager;
+	CManagerUI* m_pPaintManager;
 };
 
 //////////////////////////////////////////////////////////////////////////
 ///
 
-class CMainWnd : public WindowImplBase, public CWebBrowserEventHandler, public SkinChangedReceiver
+class CMainWnd : public CWindowUI, public CWebBrowserEventHandler, public SkinChangedReceiver
 {
 public:
 	CMainWnd();
 	~CMainWnd();
 
 public:// UI初始化
-	DuiLib::CDuiString GetSkinFile();
+	DUI::CStringUI GetSkinFile();
 	LPCTSTR GetWindowClassName() const;
 	UINT GetClassStyle() const;
 	void InitWindow();
@@ -47,10 +56,10 @@ public:// 接口回调
 	LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType);
 
 public:// UI通知消息
-	void Notify(TNotifyUI& msg);
+	void Notify(TNOTIFY_UI& msg);
 	void OnLClick(CControlUI *pControl);
 
-	DUI_DECLARE_MESSAGE_MAP()
+	UI_DECLARE_MESSAGE_MAP()
 	
 
 public:// 系统消息

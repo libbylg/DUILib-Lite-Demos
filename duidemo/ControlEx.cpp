@@ -3,13 +3,13 @@
 
 //////////////////////////////////////////////////////////////////////////
 //
-IMPLEMENT_DUICONTROL(CCircleProgressUI)
-IMPLEMENT_DUICONTROL(CMyComboUI)
+UI_IMPLEMENT_CONTROL(CCircleProgressUI)
+UI_IMPLEMENT_CONTROL(CMyComboUI)
 
 
 //////////////////////////////////////////////////////////////////////////
 //
-IMPLEMENT_DUICONTROL(CChartViewUI)
+UI_IMPLEMENT_CONTROL(CChartViewUI)
 CChartViewUI::CChartViewUI(void) : 
 m_ViewStyle(CHARTVIEW_PIE), 
 	m_sShadowImage(_T("")), 
@@ -102,7 +102,7 @@ void CChartViewUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	}
 }
 
-bool CChartViewUI::DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl)
+BOOL CChartViewUI::DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl)
 {
 	if( !::IntersectRect(&m_rcPaint, &rcPaint, &m_rcItem) ) return true;
 	CControlUI::DoPaint(hDC, rcPaint, pStopControl);
@@ -221,12 +221,12 @@ void CChartViewUI::DoPaintPie(HDC hDC, const RECT& rcPaint)
 				if(clrColor << 8 == 0) clrColor = 1;
 				if( m_bShowHtml )
 				{
-					CRenderEngine::DrawHtmlText(hDC, m_pManager, rcText, m_items[i].name, clrColor, \
+					CRenderUI::DrawHtmlText(hDC, m_pManager, rcText, m_items[i].name, clrColor, \
 						NULL, NULL, nLinks, m_iFont, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
 				}
 				else
 				{
-					CRenderEngine::DrawText(hDC, m_pManager, rcText, m_items[i].name, clrColor, \
+					CRenderUI::DrawText(hDC, m_pManager, rcText, m_items[i].name, clrColor, \
 						m_iFont, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
 				}
 			}
@@ -249,7 +249,7 @@ void CChartViewUI::DoPaintHistogram(HDC hDC, const RECT& rcPaint)
 		rcShadow.top = m_rcItem.bottom - m_ShadowImageHeight - drawTextHeight;
 		rcShadow.right = m_rcItem.right;
 		rcShadow.bottom = m_rcItem.bottom - drawTextHeight;
-		if (!CRenderEngine::DrawImageString(hDC, m_pManager, rcShadow, m_rcPaint, m_sShadowImage, NULL)) 
+		if (!CRenderUI::DrawImageString(hDC, m_pManager, rcShadow, m_rcPaint, m_sShadowImage, NULL)) 
 		{
 			m_sShadowImage.Empty();
 		}
@@ -291,7 +291,7 @@ void CChartViewUI::DoPaintHistogram(HDC hDC, const RECT& rcPaint)
 			rcPillar.top = m_rcItem.bottom - drawTextHeight - (int)( drawHeight * rateOfItem );
 			rcPillar.right = m_rcItem.left + drawLeft + m_PillarImageWidth;
 			rcPillar.bottom = m_rcItem.bottom - drawTextHeight;
-			if (!CRenderEngine::DrawImageString(hDC, m_pManager, rcPillar, m_rcPaint, m_sPillarImage, NULL)) 
+			if (!CRenderUI::DrawImageString(hDC, m_pManager, rcPillar, m_rcPaint, m_sPillarImage, NULL)) 
 			{
 				m_sPillarImage.Empty();
 			}
@@ -311,12 +311,12 @@ void CChartViewUI::DoPaintHistogram(HDC hDC, const RECT& rcPaint)
 			if(clrColor << 8 == 0) clrColor = 1;
 			if( m_bShowHtml )
 			{
-				CRenderEngine::DrawHtmlText(hDC, m_pManager, rcText, m_items[i].name, clrColor, \
+				CRenderUI::DrawHtmlText(hDC, m_pManager, rcText, m_items[i].name, clrColor, \
 					NULL, NULL, nLinks, m_iFont, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 			}
 			else
 			{
-				CRenderEngine::DrawText(hDC, m_pManager, rcText, m_items[i].name, clrColor, \
+				CRenderUI::DrawText(hDC, m_pManager, rcText, m_items[i].name, clrColor, \
 					m_iFont, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 			}
 		}
@@ -330,5 +330,5 @@ void CChartViewUI::DoPaintHistogram(HDC hDC, const RECT& rcPaint)
 
 //////////////////////////////////////////////////////////////////////////
 //
-IMPLEMENT_DUICONTROL(CWndUI)
+UI_IMPLEMENT_CONTROL(CWndUI)
 

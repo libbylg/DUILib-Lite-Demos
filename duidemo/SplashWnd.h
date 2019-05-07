@@ -20,12 +20,12 @@ public:
 
 public:
 	virtual void OnFinalMessage( HWND );
-	virtual CDuiString GetSkinFile();
+	virtual CStringUI GetSkinFile();
 	virtual LPCTSTR GetWindowClassName( void ) const;
 	virtual void InitWindow();
 
-	DUI_DECLARE_MESSAGE_MAP()
-	virtual void OnClick(TNotifyUI& msg);
+	UI_DECLARE_MESSAGE_MAP()
+	virtual void OnClick(struct TNOTIFY_UI& msg);
 
 	virtual LRESULT OnSysCommand( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled );
 	LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);

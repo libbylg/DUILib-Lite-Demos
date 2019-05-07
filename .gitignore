@@ -41,3 +41,8 @@ Temp
 *.suo
 *.user
 
+*.zip
+*.tar.gz
+bin
+includes
+temp

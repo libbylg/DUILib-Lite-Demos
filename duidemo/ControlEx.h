@@ -1,10 +1,17 @@
 #ifndef __CONTROLEX_H__
 #define __CONTROLEX_H__
 
+#include "Core/UIControl.h"
+#include "Control/UIProgress.h"
+#include "Control/UICombo.h"
+using namespace DUI;
+
+#include <vector>
+using namespace std;
 
 class CCircleProgressUI : public CProgressUI
 {
-	DECLARE_DUICONTROL(CCircleProgressUI)
+	UI_DECLARE_CONTROL(CCircleProgressUI)
 public:
 	CCircleProgressUI()
 	{
@@ -48,7 +55,7 @@ public:
 
 class CMyComboUI : public CComboUI
 {
-	DECLARE_DUICONTROL(CMyComboUI)
+	UI_DECLARE_CONTROL(CMyComboUI)
 public:
 	CMyComboUI()
 	{
@@ -74,15 +81,14 @@ public:
 
 typedef struct tagCHARTITEM
 {
-	CDuiString name;
+	CStringUI name;
 	double value;
 } CHARTITEM, *PCHARTITEM;
 
-class CChartViewUI : 
-	public CControlUI
+class CChartViewUI : public CControlUI
 {
 public:
-	DECLARE_DUICONTROL(CChartViewUI)
+	UI_DECLARE_CONTROL(CChartViewUI)
 public:
 	CChartViewUI(void);
 	~CChartViewUI(void);
@@ -92,15 +98,15 @@ public:
 
 public:
 	virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
-	virtual bool DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
+	virtual BOOL DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 	virtual void DoPaintPie(HDC hDC, const RECT& rcPaint);
 	virtual void DoPaintHistogram(HDC hDC, const RECT& rcPaint);
 private:
 	vector<CHARTITEM> m_items;
 	int m_ViewStyle;
-	CDuiString m_sShadowImage;
+	CStringUI m_sShadowImage;
 	int m_ShadowImageHeight;
-	CDuiString m_sPillarImage;
+	CStringUI m_sPillarImage;
 	int m_PillarImageWidth;
 	DWORD m_dwTextColor;
 	DWORD m_dwDisabledTextColor;
@@ -111,7 +117,7 @@ private:
 
 class CCircleProgressExUI : public CProgressUI
 {
-	DECLARE_DUICONTROL(CCircleProgressExUI)
+	UI_DECLARE_CONTROL(CCircleProgressExUI)
 public:
 	CCircleProgressExUI()
 	{
@@ -156,7 +162,7 @@ public:
 
 class CWndUI : public CControlUI
 {
-	DECLARE_DUICONTROL(CWndUI)
+	UI_DECLARE_CONTROL(CWndUI)
 public:
 	CWndUI()
 	{

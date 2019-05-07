@@ -381,6 +381,7 @@
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes\DUILib-Lite\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -392,6 +393,8 @@
       <GenerateMapFile>true</GenerateMapFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(SolutionDir)\includes\DUILib-Lite\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DUILib_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake />
   </ItemDefinitionGroup>
@@ -414,6 +417,7 @@
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(SolutionDir)includes\DUILib-Lite\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -981,45 +985,12 @@
     <ClInclude Include="StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\bin\skin\duidemo\lan_cn.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\..\bin\skin\duidemo\lan_en.xml" />
-    <None Include="..\..\bin\skin\duidemo\listitem.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\..\bin\skin\duidemo\main.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\..\bin\skin\duidemo\menu.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\..\bin\skin\duidemo\msg.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\..\bin\skin\duidemo\popup.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\..\bin\skin\duidemo\res.xml" />
-    <None Include="..\..\bin\skin\duidemo\skin.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\..\bin\skin\duidemo\splash.xml" />
-    <None Include="..\..\bin\skin\duidemo\tileitem.xml" />
-    <None Include="..\..\bin\skin\duidemo\treeitem.xml">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Flash11.tlb" />
     <None Include="Res\duidemo.ico" />
     <None Include="Res\duidemo.zip" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="duidemo.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\DuiLib\DuiLib.vcxproj">
-      <Project>{e106acd7-4e53-4aee-942b-d0dd426db34e}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
